@@ -29,7 +29,7 @@ namespace TemplateAPI.DAL.Repos
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Event>> GetPointsAsync(int pageSize, int pageNumber)
+        public async Task<List<Event>> GetEventsAsync(int pageSize, int pageNumber)
         {
             using IDbConnection conn = _ConnectionFactory.GetConnection();
             var result = await conn.QueryAsync<Event>(_EventCommands.GetEvents,
@@ -37,12 +37,28 @@ namespace TemplateAPI.DAL.Repos
             return result.ToList();
         }
 
-        public async Task<List<Event>> GetPointsByGroupIdAsync(int id)
+        public async Task<List<Event>> GetEventByGroupIdAsync(int id)
         {
             using IDbConnection conn = _ConnectionFactory.GetConnection();
             var result = await conn.QueryAsync<Event>(_EventCommands.GetEventByGroupId,
                  new { GroupId = id }, commandType: CommandType.Text);
             return result.ToList();
+        }
+
+        public async Task<bool> AddEventAsync(Event @event)
+        {
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.ExecuteAsync(_EventCommands.AddEvent,
+                 new { Name = @event.Name, Cost = @event.Cost, CreatedDate = @event.CreatedDate }, commandType: CommandType.Text);
+            return result > 0;
+        }
+
+        public async Task<bool> UpdateEventAsync(Event @event)
+        {
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.ExecuteAsync(_EventCommands.UpdateEvent,
+                 new { Name = @event.Name, Cost = @event.Cost, Id = @event.Id}, commandType: CommandType.Text);
+            return result > 0;
         }
     }
 }
