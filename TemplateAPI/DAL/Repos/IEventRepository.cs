@@ -12,6 +12,7 @@ namespace TemplateAPI.DAL.Repos
         Task<List<Event>> GetEventsAsync(int pageSize, int pageNumber);
         Task<bool> AddEventAsync(Event @event);
         Task<bool> UpdateEventAsync(Event @event);
+        Task<bool> DeleteEventAsync(int Id);
     }
     
 }

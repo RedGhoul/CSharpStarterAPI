@@ -23,7 +23,7 @@ namespace TemplateAPI.Controllers.V1
             _Logger = logger;
         }
 
-        [HttpGet("Id/{id:int}")]
+        [HttpGet("{id:int}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(EventDTO), 200)]
         [ProducesResponseType(400)]
@@ -58,7 +58,7 @@ namespace TemplateAPI.Controllers.V1
             var model = _Mapper.Map<Event>(eventDTO);
             var pointsEnity = await _EventRepository.AddEventAsync(model);
             if(pointsEnity){
-                return Ok();
+                return Ok(eventDTO);
             }else
             {
                 _Logger.LogError($"Event DTO could not be created {JsonConvert.SerializeObject(eventDTO)}");
@@ -76,11 +76,28 @@ namespace TemplateAPI.Controllers.V1
             var pointsEnity = await _EventRepository.UpdateEventAsync(model);
             if (pointsEnity)
             {
-                return Ok();
+                return Ok(eventDTO);
             }
             else
             {
                 _Logger.LogError($"Event DTO could not be created {JsonConvert.SerializeObject(eventDTO)}");
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [Produces("application/json")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            if (await _EventRepository.DeleteEventAsync(id))
+            {
+                return Ok();
+            }
+            else
+            {
+                _Logger.LogError($"Event could not be deleted by id of {id}");
                 return BadRequest();
             }
         }

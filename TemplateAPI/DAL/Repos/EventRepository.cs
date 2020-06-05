@@ -60,5 +60,13 @@ namespace TemplateAPI.DAL.Repos
                  new { Name = @event.Name, Cost = @event.Cost, Id = @event.Id}, commandType: CommandType.Text);
             return result > 0;
         }
+
+        public async Task<bool> DeleteEventAsync(int Id)
+        {
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.ExecuteAsync(_EventCommands.RemoveEvent,
+                 new { Id = Id }, commandType: CommandType.Text);
+            return result > 0;
+        }
     }
 }
