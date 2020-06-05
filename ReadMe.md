@@ -15,6 +15,7 @@ This template is specifically designed for apis that run inside containers
 
 All running via .Net Core 3.1
 
+Docker file inside of the TemplateAPI folder
 
 ## How It Works
 
