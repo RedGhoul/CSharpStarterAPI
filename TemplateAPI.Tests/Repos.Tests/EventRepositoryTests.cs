@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using TemplateAPI.DAL.Commands;
-using TemplateAPI.DAL.Executers;
-using TemplateAPI.DAL.Queries;
-using TemplateAPI.DAL.Repos;
-using TemplateAPI.Models.Enities;
 using Xunit;
 
 namespace TemplateAPI.Tests.Repos.Tests

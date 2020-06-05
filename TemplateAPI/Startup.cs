@@ -1,3 +1,4 @@
+using API.Utilities.Configuration;
 using API.Utilities.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -10,8 +11,8 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using TemplateAPI.AutoMapper;
 using TemplateAPI.DAL.Commands;
-using TemplateAPI.DAL.Executers;
-using TemplateAPI.DAL.Queries;
+using TemplateAPI.DAL.Connection;
+using TemplateAPI.DAL.Commands;
 using TemplateAPI.DAL.Repos;
 using TemplateAPI.Swagger;
 
@@ -29,8 +30,10 @@ namespace TemplateAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICommandEvent, CommandEvent>();
-            services.AddTransient<IExecuters, Executers>();
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient<IConfigManager, ConfigManager>();
+            services.AddTransient<IConnectionFactory, ConnectionFactory>();
+            services.AddTransient<IEventCommands, EventCommands>();
             services.AddTransient<IEventRepository, EventRepository>();
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSingleton(new MapperConfiguration(mc =>

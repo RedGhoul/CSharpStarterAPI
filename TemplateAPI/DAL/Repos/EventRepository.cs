@@ -5,46 +5,44 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using TemplateAPI.DAL.Executers;
-using TemplateAPI.DAL.Queries;
+using TemplateAPI.DAL.Commands;
+using TemplateAPI.DAL.Connection;
 using TemplateAPI.Models.Enities;
 
 namespace TemplateAPI.DAL.Repos
 {
     public class EventRepository : IEventRepository
     {
-        private readonly ICommandEvent _commandText;
-        private readonly string _connStr;
-        private readonly IExecuters _executers;
-        public EventRepository(IConfiguration configuration, ICommandEvent commandText, IExecuters executers)
+        private readonly IConnectionFactory _ConnectionFactory;
+        private readonly IEventCommands _EventCommands;
+        public EventRepository(IConnectionFactory connectionFactory, IEventCommands eventCommands)
         {
-            _commandText = commandText;
-            _connStr = ConfigManager.GetConnectionString(configuration, "PrimaryConnection");
-            _executers = executers;
+            _ConnectionFactory = connectionFactory;
+            _EventCommands = eventCommands;
         }
 
         public async Task<Event> GetByIdAsync(int id)
         {
-            var result = await _executers.ExecuteCommand(_connStr,
-              conn => conn.QueryAsync<Event>(_commandText.GetEventById,
-                  new { id }, commandType: CommandType.Text));
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.QueryAsync<Event>(_EventCommands.GetEventById,
+                new { id }, commandType: CommandType.Text);
             return result.FirstOrDefault();
         }
 
         public async Task<List<Event>> GetPointsAsync(int pageSize, int pageNumber)
         {
-            var result = await _executers.ExecuteCommand(_connStr,
-                  conn => conn.QueryAsync<Event>(_commandText.GetEvents,
-                      new { PageSize = pageSize, PageNumber = pageNumber }, commandType: CommandType.Text));
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.QueryAsync<Event>(_EventCommands.GetEvents,
+                      new { PageSize = pageSize, PageNumber = pageNumber }, commandType: CommandType.Text);
             return result.ToList();
         }
 
         public async Task<List<Event>> GetPointsByGroupIdAsync(int id)
         {
-            var query = await _executers.ExecuteCommand(_connStr,
-             conn => conn.QueryAsync<Event>(_commandText.GetEventByGroupId,
-                 new { Budgetid = id }, commandType: CommandType.Text));
-            return query.ToList();
+            using IDbConnection conn = _ConnectionFactory.GetConnection();
+            var result = await conn.QueryAsync<Event>(_EventCommands.GetEventByGroupId,
+                 new { GroupId = id }, commandType: CommandType.Text);
+            return result.ToList();
         }
     }
 }
