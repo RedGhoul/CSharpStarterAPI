@@ -6,9 +6,9 @@ This template is specifically designed for apis that run inside containers
 
 * **ORM** built in (via Dapper)
 * **Versioning** built in (microsoft/aspnet-api-versioning)
-* **Logging** built in (via ELK Stack)
+* **Logging** built in (via ELK Stack or Azure Monitor)
 * **Documentation** built in (via Swagger - Swashbuckler)
-* **Client Side Code Generation** built in (via Auto Rest )
+* **Client Side Code Generation** built in (via Nswag )
 * **Testing** built in (via XUnit & Moq)
 * **Container** First design in mind
 
