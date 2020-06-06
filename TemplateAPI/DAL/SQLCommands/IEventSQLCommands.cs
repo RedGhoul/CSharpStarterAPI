@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TemplateAPI.DAL.Commands
+﻿namespace TemplateAPI.DAL.SQLCommands
 {
-    public interface IEventCommands
+    public interface IEventSQLCommands
     {
         string GetEvents { get; }
         string GetEventById { get; }

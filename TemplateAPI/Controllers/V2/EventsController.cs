@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using TemplateAPI.DAL.Repos;
 using TemplateAPI.Models.DTO;
 

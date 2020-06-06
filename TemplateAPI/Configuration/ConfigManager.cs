@@ -11,7 +11,7 @@ namespace API.Utilities.Configuration
             _Configuration = configuration;
         }
 
-        public  string GetAppSettingsValue( string name)
+        public string GetAppSettingsValue(string name)
         {
             if (!bool.Parse(_Configuration.GetSection("AppSettings")["DockerEnv"]))
             {

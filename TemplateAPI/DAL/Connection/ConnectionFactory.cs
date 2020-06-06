@@ -1,17 +1,13 @@
 ﻿using API.Utilities.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TemplateAPI.DAL.Connection
 {
     public class ConnectionFactory : IConnectionFactory
     {
         private IDbConnection _connection;
-        private IConfigManager _configManager;
+        private readonly IConfigManager _configManager;
 
         public ConnectionFactory(IConfigManager configManager)
         {
@@ -30,7 +26,7 @@ namespace TemplateAPI.DAL.Connection
         {
             if (_connection == null)
             {
-                _connection = new SqlConnection(_configManager.GetConnectionString("ULK"));
+                _connection = new SqlConnection(_configManager.GetConnectionString("PrimaryConnection"));
             }
             if (_connection.State != ConnectionState.Open)
             {
@@ -40,5 +36,5 @@ namespace TemplateAPI.DAL.Connection
         }
     }
 
-        
+
 }

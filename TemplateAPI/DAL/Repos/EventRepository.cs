@@ -1,12 +1,10 @@
-﻿using API.Utilities.Configuration;
-using Dapper;
-using Microsoft.Extensions.Configuration;
+﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using TemplateAPI.DAL.Commands;
 using TemplateAPI.DAL.Connection;
+using TemplateAPI.DAL.SQLCommands;
 using TemplateAPI.Models.Enities;
 
 namespace TemplateAPI.DAL.Repos
@@ -14,8 +12,8 @@ namespace TemplateAPI.DAL.Repos
     public class EventRepository : IEventRepository
     {
         private readonly IConnectionFactory _ConnectionFactory;
-        private readonly IEventCommands _EventCommands;
-        public EventRepository(IConnectionFactory connectionFactory, IEventCommands eventCommands)
+        private readonly IEventSQLCommands _EventCommands;
+        public EventRepository(IConnectionFactory connectionFactory, IEventSQLCommands eventCommands)
         {
             _ConnectionFactory = connectionFactory;
             _EventCommands = eventCommands;
@@ -49,7 +47,12 @@ namespace TemplateAPI.DAL.Repos
         {
             using IDbConnection conn = _ConnectionFactory.GetConnection();
             var result = await conn.ExecuteAsync(_EventCommands.AddEvent,
-                 new { Name = @event.Name, Cost = @event.Cost, CreatedDate = @event.CreatedDate }, commandType: CommandType.Text);
+                 new
+                 {
+                     Name = @event.Name,
+                     Cost = @event.Cost,
+                     CreatedDate = @event.CreatedDate
+                 }, commandType: CommandType.Text);
             return result > 0;
         }
 
@@ -57,7 +60,12 @@ namespace TemplateAPI.DAL.Repos
         {
             using IDbConnection conn = _ConnectionFactory.GetConnection();
             var result = await conn.ExecuteAsync(_EventCommands.UpdateEvent,
-                 new { Name = @event.Name, Cost = @event.Cost, Id = @event.Id}, commandType: CommandType.Text);
+                 new
+                 {
+                     Name = @event.Name,
+                     Cost = @event.Cost,
+                     Id = @event.Id
+                 }, commandType: CommandType.Text);
             return result > 0;
         }
 

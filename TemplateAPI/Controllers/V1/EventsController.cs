@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using TemplateAPI.DAL.Repos;
+using TemplateAPI.DAL.CQRS.Commands.Events;
+using TemplateAPI.DAL.Queries.Events;
 using TemplateAPI.Models.DTO;
-using TemplateAPI.Models.Enities;
 
 namespace TemplateAPI.Controllers.V1
 {
@@ -13,14 +14,15 @@ namespace TemplateAPI.Controllers.V1
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly IEventRepository _EventRepository;
-        private readonly IMapper _Mapper;
         private readonly ILogger<EventsController> _Logger;
-        public EventsController(IEventRepository eventRepository, IMapper mapper, ILogger<EventsController> logger)
+        private readonly IMediator _Mediator;
+        private readonly IMapper _Mapper;
+
+        public EventsController(ILogger<EventsController> logger, IMediator mediator, IMapper mapper)
         {
-            _EventRepository = eventRepository;
-            _Mapper = mapper;
             _Logger = logger;
+            _Mediator = mediator;
+            _Mapper = mapper;
         }
 
         [HttpGet("{id:int}")]
@@ -30,59 +32,43 @@ namespace TemplateAPI.Controllers.V1
         public async Task<IActionResult> GetById(int id)
         {
             _Logger.LogInformation($"Logging event by ID of {id}");
-            var pointsEnity = await _EventRepository.GetByIdAsync(id);
-            if (pointsEnity == null) return NotFound();
-            var model = _Mapper.Map<EventDTO>(pointsEnity);
-
-            return Ok(model);
+            var query = new GetEventByIdQuery(id);
+            var result = await _Mediator.Send(query);
+            return result == null ? (IActionResult)NotFound() : Ok(result);
         }
 
         [HttpGet("GroupId/{id:int}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(EventDTO), 200)]
+        [ProducesResponseType(typeof(List<EventDTO>), 200)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult> GetByEntityTypeId(int id)
+        public async Task<IActionResult> GetByEntityTypeId(int id)
         {
             _Logger.LogError($"Logging event by ID of {id}");
-            var pointsEnity = await _EventRepository.GetEventByGroupIdAsync(id);
-            if (pointsEnity == null) return NotFound();
-            return Ok(_Mapper.Map<EventDTO>(pointsEnity));
+            var query = new GetEventByEntityTypeIdQuery(id);
+            var result = await _Mediator.Send(query);
+            return result == null ? BadRequest() : (IActionResult)Ok(result);
         }
 
         [HttpPost]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(EventDTO), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> PostEvent(EventDTO eventDTO)
+        public async Task<IActionResult> CreateEvent(EventDTO eventDTO)
         {
-            var model = _Mapper.Map<Event>(eventDTO);
-            var pointsEnity = await _EventRepository.AddEventAsync(model);
-            if(pointsEnity){
-                return Ok(eventDTO);
-            }else
-            {
-                _Logger.LogError($"Event DTO could not be created {JsonConvert.SerializeObject(eventDTO)}");
-                return BadRequest();
-            }
+            var CEC = _Mapper.Map<CreateEventCommand>(eventDTO);
+            var result = await _Mediator.Send(CEC);
+            return result == null ? (IActionResult)BadRequest() : Ok();
         }
 
         [HttpPatch]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(EventDTO), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateEvent(EventDTO eventDTO)
         {
-            var model = _Mapper.Map<Event>(eventDTO);
-            var pointsEnity = await _EventRepository.UpdateEventAsync(model);
-            if (pointsEnity)
-            {
-                return Ok(eventDTO);
-            }
-            else
-            {
-                _Logger.LogError($"Event DTO could not be created {JsonConvert.SerializeObject(eventDTO)}");
-                return BadRequest();
-            }
+            var UEC = _Mapper.Map<UpdateEventCommand>(eventDTO);
+            var result = await _Mediator.Send(UEC);
+            return result.IsCreated ? (IActionResult)Ok() : BadRequest();
         }
 
         [HttpDelete("{id:int}")]
@@ -91,15 +77,8 @@ namespace TemplateAPI.Controllers.V1
         [ProducesResponseType(400)]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            if (await _EventRepository.DeleteEventAsync(id))
-            {
-                return Ok();
-            }
-            else
-            {
-                _Logger.LogError($"Event could not be deleted by id of {id}");
-                return BadRequest();
-            }
+            var result = await _Mediator.Send(new DeleteEventCommand() { Id = id });
+            return result.IsDeleted ? (IActionResult)Ok() : BadRequest();
         }
 
     }

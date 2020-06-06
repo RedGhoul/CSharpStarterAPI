@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TemplateAPI.DAL.Commands
+﻿namespace TemplateAPI.DAL.SQLCommands
 {
-    public class EventCommands : IEventCommands
+    public class EventSQLCommands : IEventSQLCommands
     {
         public string GetEvents => @"Select * From Event ORDER BY CreatedDate
                                     OFFSET @PageSize * (@PageNumber - 1) ROWS
