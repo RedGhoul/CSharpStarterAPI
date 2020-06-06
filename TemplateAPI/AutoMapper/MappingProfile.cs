@@ -14,6 +14,8 @@ namespace TemplateAPI.AutoMapper
             CreateMap<EventDTO, Event>();
             CreateMap<EventDTO, CreateEventCommand>();
             CreateMap<CreateEventCommand, EventDTO>();
+            CreateMap<Event, CreateEventCommand>();
+            CreateMap<CreateEventCommand, Event>();
             CreateMap<EventDTO, UpdateEventCommand>();
             CreateMap<UpdateEventCommand, EventDTO>();
             CreateMap<EventDTO, DeleteEventResponse>();

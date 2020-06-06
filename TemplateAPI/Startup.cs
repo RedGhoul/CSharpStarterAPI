@@ -21,7 +21,6 @@ using TemplateAPI.AutoMapper;
 using TemplateAPI.DAL.Connection;
 using TemplateAPI.DAL.Repos;
 using TemplateAPI.DAL.SQLCommands;
-using TemplateAPI.PipelineBehaviors;
 using TemplateAPI.Swagger;
 
 namespace TemplateAPI
@@ -46,8 +45,6 @@ namespace TemplateAPI
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             services.AddMediatR(typeof(Startup)); // Scan for handlers
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
 
             services.AddSingleton(new MapperConfiguration(mc =>
             {
@@ -88,25 +85,7 @@ namespace TemplateAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseExceptionHandler(x => x.Run(async context =>
-            //{
-            //    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-            //    var exception = errorFeature.Error;
-            //    if (!(exception is ValidationException validationException))
-            //    {
-            //        throw exception;
-            //    }
-
-            //    var errors = validationException.Errors.Select(er => new
-            //    {
-            //        er.ErrorMessage,
-            //        er.PropertyName
-            //    });
-            //    var errorText = JsonConvert.SerializeObject(errors);
-            //    context.Response.StatusCode = 400;
-            //    context.Response.ContentType = "application/json";
-            //    await context.Response.WriteAsync(errorText, Encoding.UTF8);
-            //}));
+           
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

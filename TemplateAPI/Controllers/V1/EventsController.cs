@@ -53,9 +53,8 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateEvent(EventDTO eventDTO)
+        public async Task<IActionResult> CreateEvent(CreateEventCommand CEC)
         {
-            var CEC = _Mapper.Map<CreateEventCommand>(eventDTO);
             var result = await _Mediator.Send(CEC);
             return result == null ? (IActionResult)BadRequest() : Ok();
         }
@@ -64,9 +63,8 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateEvent(EventDTO eventDTO)
+        public async Task<IActionResult> UpdateEvent(UpdateEventCommand UEC)
         {
-            var UEC = _Mapper.Map<UpdateEventCommand>(eventDTO);
             var result = await _Mediator.Send(UEC);
             return result.IsCreated ? (IActionResult)Ok() : BadRequest();
         }
