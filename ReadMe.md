@@ -1,21 +1,22 @@
 # C# Starter API
 
-C# Starter API is a template for creating APIs developers actually want to use. And creates much of the ground work need to get going.
+C# Starter API is a template for creating APIs developers actually want to use. 
+And creates much of the ground work need to get going.
+This template is specifically designed for apis that run inside containers.
 
-This template is specifically designed for apis that run inside containers
-
-* **ORM** built in (via Dapper)
-* **Versioning** built in (microsoft/aspnet-api-versioning)
+* **ORM** via Dapper
 * **Logging** built in (via ELK Stack or Azure Monitor)
-* **Documentation** built in (via Swagger - Swashbuckler)
-* **Client Side Code Generation** built in (via Nswag )
 * **Testing** built in (via XUnit & Moq)
 * **Container** First design in mind
+* **Validation** via FluentValidation
+* **Versioning** built in (microsoft/aspnet-api-versioning)
+* **Documentation** built in (via Swagger - Swashbuckler)
+* **Clean & Solid Code** via CQRS & MediaR
+* **Client Side Code Generation** built in (via Nswag)
 
 
 All running via .Net Core 3.1
 
-Docker file inside of the TemplateAPI folder
 
 ## How It Works
 
@@ -26,3 +27,5 @@ Docker file inside of the TemplateAPI folder
 
 Set the required values in TemplateAPI\appsettings.json
 and get going.
+
+Docker file inside of the TemplateAPI folder
