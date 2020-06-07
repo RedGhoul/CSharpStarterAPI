@@ -9,7 +9,8 @@ This template is specifically designed for apis that run inside containers.
 * **Testing** built in (via XUnit & Moq)
 * **Container** First design in mind
 * **Validation** via FluentValidation
-* **Versioning** built in (microsoft/aspnet-api-versioning)
+* **Versioning** built in (via microsoft/aspnet-api-versioning)
+* **Rate Limiting** built in (via AspNetCoreRateLimit)
 * **Documentation** built in (via Swagger - Swashbuckler)
 * **Clean & Solid Code** via CQRS & MediaR
 * **Client Side Code Generation** built in (via Nswag)
