@@ -29,6 +29,7 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(typeof(EventDTO), 200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(429)]
         public async Task<IActionResult> GetById(int id)
         {
             _Logger.LogInformation($"Logging event by ID of {id}");
@@ -41,6 +42,7 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<EventDTO>), 200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(429)]
         public async Task<IActionResult> GetByEntityTypeId(int id)
         {
             _Logger.LogError($"Logging event by ID of {id}");
@@ -53,6 +55,7 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(429)]
         public async Task<IActionResult> CreateEvent(CreateEventCommand CEC)
         {
             var result = await _Mediator.Send(CEC);
@@ -63,6 +66,7 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(429)]
         public async Task<IActionResult> UpdateEvent(UpdateEventCommand UEC)
         {
             var result = await _Mediator.Send(UEC);
@@ -73,6 +77,7 @@ namespace TemplateAPI.Controllers.V1
         [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(429)]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             var result = await _Mediator.Send(new DeleteEventCommand() { Id = id });
