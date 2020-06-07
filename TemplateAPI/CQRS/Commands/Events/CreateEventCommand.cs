@@ -8,7 +8,8 @@ namespace TemplateAPI.DAL.CQRS.Commands.Events
     {
         public int EntityId { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
         public decimal Cost { get; set; }
+        public string Description { get; set; }
+
     }
 }

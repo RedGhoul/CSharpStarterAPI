@@ -4,7 +4,7 @@
     {
         string GetEvents { get; }
         string GetEventById { get; }
-        string GetEventByGroupId { get; }
+        string GetEventByEntityId { get; }
         string AddEvent { get; }
         string UpdateEvent { get; }
         string RemoveEvent { get; }

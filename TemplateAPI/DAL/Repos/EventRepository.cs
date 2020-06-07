@@ -38,8 +38,8 @@ namespace TemplateAPI.DAL.Repos
         public async Task<List<Event>> GetEventByGroupIdAsync(int id)
         {
             using IDbConnection conn = _ConnectionFactory.GetConnection();
-            var result = await conn.QueryAsync<Event>(_EventCommands.GetEventByGroupId,
-                 new { GroupId = id }, commandType: CommandType.Text);
+            var result = await conn.QueryAsync<Event>(_EventCommands.GetEventByEntityId,
+                 new { EntityId = id }, commandType: CommandType.Text);
             return result.ToList();
         }
 
@@ -51,7 +51,8 @@ namespace TemplateAPI.DAL.Repos
                  {
                      Name = @event.Name,
                      Cost = @event.Cost,
-                     CreatedDate = @event.CreatedDate
+                     EntityId = @event.EntityId,
+                     Description = @event.Description
                  }, commandType: CommandType.Text);
             return result > 0;
         }

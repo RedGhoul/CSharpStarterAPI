@@ -38,7 +38,7 @@ namespace TemplateAPI.Controllers.V1
             return result == null ? (IActionResult)NotFound() : Ok(result);
         }
 
-        [HttpGet("GroupId/{id:int}")]
+        [HttpGet("EntityId/{id:int}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<EventDTO>), 200)]
         [ProducesResponseType(400)]
