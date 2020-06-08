@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+﻿using Application.DTO;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TemplateAPI.DAL.Repos;
-using TemplateAPI.Models.DTO;
+using Persistence.Repos;
 
 namespace TemplateAPI.Controllers.V2
 {

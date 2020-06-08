@@ -1,12 +1,11 @@
-using API.Utilities.Configuration;
 using API.Utilities.Swagger;
+using Application.AutoMapper;
+using Application.Configuration;
 using AspNetCoreRateLimit;
 using AutoMapper;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -15,14 +14,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Persistence.Connection;
+using Persistence.Repos;
+using Persistence.Repos.SQLCommands;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
-using System.Text;
-using TemplateAPI.AutoMapper;
-using TemplateAPI.DAL.Connection;
-using TemplateAPI.DAL.Repos;
-using TemplateAPI.DAL.SQLCommands;
 using TemplateAPI.Swagger;
+using IConnectionFactory = Persistence.Connection.IConnectionFactory;
 
 namespace TemplateAPI
 {
