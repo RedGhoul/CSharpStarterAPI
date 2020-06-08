@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using Application.Commands.Events;
+using Application.DTO;
+using Application.Queries.Events;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TemplateAPI.DAL.CQRS.Commands.Events;
-using TemplateAPI.DAL.Queries.Events;
-using TemplateAPI.Models.DTO;
 
 namespace TemplateAPI.Controllers.V1
 {

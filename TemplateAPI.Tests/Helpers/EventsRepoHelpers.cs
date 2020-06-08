@@ -1,4 +1,4 @@
-﻿using TemplateAPI.Models.Enities;
+﻿using Domain.Enities;
 
 namespace TemplateAPI.Tests.Helpers
 {
