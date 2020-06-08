@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.IntegrationTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.IntegrationTests", "Persistence.IntegrationTests\Persistence.IntegrationTests.csproj", "{11573460-07C8-42F3-BC68-35B1E2EB0818}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0DD9A81A-DDAC-4DE7-A188-A035F5A8C597}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4F3860AE-C57F-4E60-B0BE-467C721CB609} = {0DD9A81A-DDAC-4DE7-A188-A035F5A8C597}
+		{0B6504C1-A3EA-4301-9A40-2E447F7E8E05} = {0DD9A81A-DDAC-4DE7-A188-A035F5A8C597}
+		{9A90BC65-C2A0-4AFB-B47A-A21A8D4BDEC6} = {0DD9A81A-DDAC-4DE7-A188-A035F5A8C597}
+		{11573460-07C8-42F3-BC68-35B1E2EB0818} = {0DD9A81A-DDAC-4DE7-A188-A035F5A8C597}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F1CA419-0ACC-4AFF-8244-0827205707A0}
