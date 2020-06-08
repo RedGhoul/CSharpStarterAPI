@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TemplateAPI.Models.DTO;
 using TemplateAPI.Models.Enities;
 
 namespace TemplateAPI.DAL.Repos
@@ -14,5 +13,5 @@ namespace TemplateAPI.DAL.Repos
         Task<bool> UpdateEventAsync(Event @event);
         Task<bool> DeleteEventAsync(int Id);
     }
-    
+
 }

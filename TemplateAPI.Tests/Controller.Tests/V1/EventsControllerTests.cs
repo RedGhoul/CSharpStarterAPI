@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Threading.Tasks;
 using TemplateAPI.Controllers.V1;
-using TemplateAPI.DAL.Repos;
-using TemplateAPI.Tests.Helpers;
 using Xunit;
 
 namespace TemplateAPI.Tests.Controller.Tests.V1
@@ -16,12 +15,13 @@ namespace TemplateAPI.Tests.Controller.Tests.V1
         public async Task GetById_Returns_NotFound()
         {
             // Arrange
-            var mockPointRepo = new Mock<IEventRepository>();
-            mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
-                .ReturnsAsync(EventsRepoHelpers.GetByIdAsyncNull(9999));
+            //var mockPointRepo = new Mock<IEventRepository>();
+            //mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
+            //    .ReturnsAsync(EventsRepoHelpers.GetByIdAsyncNull(9999));
             var mockLogger = new Mock<ILogger<EventsController>>();
             var mockMapper = new Mock<IMapper>();
-            var controller = new EventsController(mockPointRepo.Object, mockMapper.Object, mockLogger.Object);
+            var mockMediator = new Mock<IMediator>();
+            var controller = new EventsController(mockLogger.Object, mockMediator.Object, mockMapper.Object);
 
             // Act
             var result = await controller.GetById(9999);
@@ -34,12 +34,13 @@ namespace TemplateAPI.Tests.Controller.Tests.V1
         public async Task GetById_Returns_Ok()
         {
             // Arrange
-            var mockPointRepo = new Mock<IEventRepository>();
-            mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
-                .ReturnsAsync(EventsRepoHelpers.GetByIdAsync(9999));
+            //var mockPointRepo = new Mock<IEventRepository>();
+            //mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
+            //    .ReturnsAsync(EventsRepoHelpers.GetByIdAsync(9999));
             var mockMapper = new Mock<IMapper>();
             var mockLogger = new Mock<ILogger<EventsController>>();
-            var controller = new EventsController(mockPointRepo.Object, mockMapper.Object, mockLogger.Object);
+            var mockMediator = new Mock<IMediator>();
+            var controller = new EventsController(mockLogger.Object, mockMediator.Object, mockMapper.Object);
 
             // Act
             var result = await controller.GetById(9999);
@@ -52,12 +53,13 @@ namespace TemplateAPI.Tests.Controller.Tests.V1
         public async Task GetByGroupId_Returns_NotFound()
         {
             // Arrange
-            var mockPointRepo = new Mock<IEventRepository>();
-            mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
-                .ReturnsAsync(EventsRepoHelpers.GetByIdAsyncNull(9999));
+            //var mockPointRepo = new Mock<IEventRepository>();
+            //mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
+            //    .ReturnsAsync(EventsRepoHelpers.GetByIdAsyncNull(9999));
             var mockMapper = new Mock<IMapper>();
             var mockLogger = new Mock<ILogger<EventsController>>();
-            var controller = new EventsController(mockPointRepo.Object, mockMapper.Object, mockLogger.Object);
+            var mockMediator = new Mock<IMediator>();
+            var controller = new EventsController(mockLogger.Object, mockMediator.Object, mockMapper.Object);
 
             // Act
             var result = await controller.GetById(9999);
@@ -70,12 +72,13 @@ namespace TemplateAPI.Tests.Controller.Tests.V1
         public async Task GetByGroupId_Returns_Ok()
         {
             // Arrange
-            var mockPointRepo = new Mock<IEventRepository>();
-            mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
-                .ReturnsAsync(EventsRepoHelpers.GetByIdAsync(9999));
+            //var mockPointRepo = new Mock<IEventRepository>();
+            //mockPointRepo.Setup(repo => repo.GetByIdAsync(9999))
+            //    .ReturnsAsync(EventsRepoHelpers.GetByIdAsync(9999));
             var mockMapper = new Mock<IMapper>();
             var mockLogger = new Mock<ILogger<EventsController>>();
-            var controller = new EventsController(mockPointRepo.Object, mockMapper.Object, mockLogger.Object);
+            var mockMediator = new Mock<IMediator>();
+            var controller = new EventsController(mockLogger.Object, mockMediator.Object, mockMapper.Object);
 
             // Act
             var result = await controller.GetById(9999);
