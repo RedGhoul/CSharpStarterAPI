@@ -2,6 +2,6 @@
 {
     public class CreateEventResponse
     {
-        public bool IsCreated { get; set; }
+        public int EventId { get; set; } = -1;
     }
 }

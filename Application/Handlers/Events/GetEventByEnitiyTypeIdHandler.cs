@@ -1,32 +1,39 @@
 ﻿using Application.DTO;
 using Application.Queries.Events;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Persistence.Repos;
+using Persistence;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Commands.Handlers.Events
+namespace Application.Handlers.Events
 {
-    public class GetEventByEnitiyTypeIdHandler : IRequestHandler<GetEventByEntityTypeIdQuery, List<EventDTO>>
+    public class GetEventByEnitiyTypeIdHandler : IRequestHandler<GetEventByEventTypeIdQuery, List<EventDTO>>
     {
-        private readonly IEventRepository _EventRepository;
+
         private readonly IMapper _Mapper;
         private readonly ILogger<GetEventByEnitiyTypeIdHandler> _Logger;
+        private readonly ApplicationDbContext _Context;
 
-        public GetEventByEnitiyTypeIdHandler(IEventRepository eventRepository, IMapper mapper, ILogger<GetEventByEnitiyTypeIdHandler> logger)
+        public GetEventByEnitiyTypeIdHandler(ApplicationDbContext context,
+            IMapper mapper, ILogger<GetEventByEnitiyTypeIdHandler> logger)
         {
-            _EventRepository = eventRepository;
+            _Context = context;
             _Mapper = mapper;
             _Logger = logger;
         }
 
-        public async Task<List<EventDTO>> Handle(GetEventByEntityTypeIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<EventDTO>> Handle(GetEventByEventTypeIdQuery request,
+            CancellationToken cancellationToken)
         {
-            var eventEnities = await _EventRepository.GetEventByGroupIdAsync(request.Id);
-            return _Mapper.Map<List<EventDTO>>(eventEnities);
+            List<Event> eventEntities = await _Context.Events.
+                Where(x => x.EventTypeId == request.Id).ToListAsync();
+            return _Mapper.Map<List<EventDTO>>(eventEntities);
         }
     }
 }

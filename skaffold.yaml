@@ -1,0 +1,14 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+    local:
+        push: false
+    artifacts:
+        - image: avaneesa/csharpstarterapi
+          context: .
+          docker:
+            dockerfile: Dockerfile
+deploy:
+    kubectl:
+        manifests:
+            - dev-k8s/server-deployment.yaml

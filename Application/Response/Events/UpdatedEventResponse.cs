@@ -2,6 +2,6 @@
 {
     public class UpdateEventResponse
     {
-        public bool IsCreated { get; set; }
+        public bool Success { get; set; }
     }
 }

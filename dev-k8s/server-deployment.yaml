@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: api-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: server-api
+    template:
+        metadata:
+            labels:
+                component: server-api
+        spec:
+            containers:
+                - name: csharpstarterapi
+                  image: avaneesa/csharpstarterapi
+                  ports:
+                    - containerPort: 80
+                  env:
+                    - name: NasaMarsDataBaseUrl
+                      value: "https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0"
+                    - name: PrimaryConnection
+                      valueFrom:
+                          secretKeyRef:
+                            name: connectionstring
+                            key: PrimaryConnection
+
+

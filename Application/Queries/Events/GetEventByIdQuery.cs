@@ -11,5 +11,6 @@ namespace Application.Queries.Events
         {
             Id = id;
         }
+
     }
 }

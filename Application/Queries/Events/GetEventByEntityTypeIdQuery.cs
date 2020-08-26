@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Application.Queries.Events
 {
-    public class GetEventByEntityTypeIdQuery : IRequest<List<EventDTO>>
+    public class GetEventByEventTypeIdQuery : IRequest<List<EventDTO>>
     {
         public int Id { get; set; }
-        public GetEventByEntityTypeIdQuery(int id)
+        public GetEventByEventTypeIdQuery(int id)
         {
             Id = id;
         }
